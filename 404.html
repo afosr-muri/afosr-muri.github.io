@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Page moved</title>
+  <meta name="robots" content="noindex">
+  <script>
+    // --- CONFIG ---
+    // The new site root (no trailing slash)
+    const NEW_BASE = "https://neworg.github.io/new-repo";
+    // The old repo base path (starts with "/"). For project sites it’s "/old-repo".
+    const OLD_BASE_PATH = "/old-repo";
+
+    // Compute path on the new site by stripping the old base path if present
+    const here = window.location;
+    const rawPath = here.pathname;
+    const path =
+      rawPath.startsWith(OLD_BASE_PATH)
+        ? rawPath.slice(OLD_BASE_PATH.length) || "/"
+        : rawPath;
+
+    const dest = NEW_BASE + path + here.search + here.hash;
+    window.location.replace(dest);
+  </script>
+</head>
+<body>
+  <p>This page has moved. <a id="link" href="#">Go to the new location</a>.</p>
+  <script>
+    document.getElementById("link").href = (function () {
+      const here = window.location;
+      const rawPath = here.pathname;
+      const path =
+        rawPath.startsWith(OLD_BASE_PATH)
+          ? rawPath.slice(OLD_BASE_PATH.length) || "/"
+          : rawPath;
+      return NEW_BASE + path + here.search + here.hash;
+    })();
+  </script>
+</body>
+</html>
